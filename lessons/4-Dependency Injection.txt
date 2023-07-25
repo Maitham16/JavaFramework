@@ -1,0 +1,74 @@
+Dependency Injection (DI) is one of the fundamental aspects of the Spring Framework. 
+It's a design pattern that allows us to make our applications loosely coupled and extendable.
+
+To understand Dependency Injection, we should first understand the problem it solves.
+
+Consider a high-level module that uses a low-level module, and the high-level module manages 
+the creation and lifetime of the low-level module. In this case, the high-level module is 
+dependent on the low-level module, and we can't use the high-level module without also using 
+the low-level module. This creates a tightly coupled and hard-to-test application.
+
+Here is where Dependency Injection comes in. Instead of the high-level module creating an 
+instance of the low-level module, the instance is created and given ("injected") to the 
+high-level module by an outside entity (in Spring, the IoC container). This way, 
+the high-level module is no longer dependent on the low-level module. It's only dependent 
+on an abstraction (an interface), and the actual implementation is determined at runtime. 
+This leads to a more flexible and testable application.
+
+In the context of Spring, you'd typically use annotations to specify dependencies:
+
+    @Autowired: This is the main annotation you'll use for DI. You can use it on fields, 
+    constructors, or methods.
+
+        @Autowired
+        private MyService myService;
+
+
+    @Component and @Service: These annotations are used to define beans. The difference 
+    between them is mostly semantic. @Component is a generic annotation. @Service is a more 
+    specific version used for service-layer classes.
+
+        @Service
+        public class MyServiceImpl implements MyService {
+
+            // Implementation...
+        }
+
+    @Configuration and @Bean: These are used to define beans manually.
+    
+            @Configuration
+            public class MyConfiguration {
+    
+                @Bean
+                public MyService myService() {
+                    return new MyServiceImpl();
+                }
+            }
+
+Here's an example of how you can use DI in a Spring application:
+
+        @Service
+        public class MyServiceImpl implements MyService {
+            // Implementation...
+        }
+
+        @RestController
+        public class MyController {
+
+            private final MyService myService;
+
+            @Autowired
+            public MyController(MyService myService) {
+                this.myService = myService;
+            }
+
+            // ...
+        }
+
+In this example, we have a service class (MyServiceImpl) and a controller class 
+(MyController). The controller needs to use the service, so the service is a dependency 
+of the controller.
+
+Instead of the controller creating an instance of the service, the service is automatically 
+created by Spring (because it's annotated with @Service), and an instance is "injected" into 
+the controller's constructor (because the constructor is annotated with @Autowired).
