@@ -1,0 +1,38 @@
+Here are the core concepts you need to know to get started with the Spring Framework:
+
+    Inversion of Control (IoC) / Dependency Injection (DI): At the heart of Spring is its 
+    IoC container, which provides a consistent way to manage object dependencies. 
+    Rather than having your objects configure their own dependencies, Spring IoC 
+    container takes care of it. This is a fundamental shift in approach and controls 
+    the program flow.
+
+    Aspect-Oriented Programming (AOP): This is a programming paradigm that aims to increase 
+    modularity by allowing the separation of cross-cutting concerns (such as logging, 
+    security, transaction management). It does so by adding additional behavior to existing 
+    code without modifying the code itself.
+
+    Spring MVC: This is Spring's web framework and provides a clean separation between 
+    domain model code and web forms and integrates with all of the nice features of the 
+    Spring Framework.
+
+    Spring Boot: This project lies on top of the Spring Framework and largely simplifies 
+    the setup and configuration of Spring applications. It's a great way to get a Spring 
+    application up and running with minimal configuration. It also provides production-ready 
+    features such as metrics, health checks, and externalized configuration.
+
+    Spring Data: Makes it easier to build Spring-powered applications that use new data 
+    access technologies such as non-relational databases, map-reduce frameworks, 
+    and cloud-based data services as well as provide improved support for relational 
+    database technologies.
+
+    Spring Security: A powerful and customizable authentication and access-control framework. 
+    It's the de-facto standard for securing Spring-based applications.
+
+    Testing with Spring: Spring provides first-class support for integration testing and 
+    allows you to write tests that are easier to understand, simpler to maintain, and provide 
+    more robust error reporting.
+
+To begin learning Spring, you might want to start by installing Spring Boot and creating a 
+simple project. Spring Boot makes it easy to create Spring-powered, production-grade 
+applications and services with absolute minimum fuss. It takes an opinionated view of 
+the Spring platform so that new and existing users can quickly get to the bits they need.
