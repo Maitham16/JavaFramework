@@ -39,7 +39,7 @@ Here's an example of an Entity:
             private String firstName;
         
             @Column(name = "last_name", nullable = false)
-            private String lastName;
+            private String salary;
             
             // constructors, getters, setters...
         }
@@ -62,7 +62,7 @@ for which the implementation is automatically provided by Spring. For example:
 
         public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-            List<Employee> findByLastName(String lastName);
+            List<Employee> findBysalary(String salary);
 
         }
 

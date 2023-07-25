@@ -1,0 +1,56 @@
+Spring MVC (Model-View-Controller) is a module of Spring Framework that provides a structured 
+solution to develop dynamic web applications. As the name suggests, it's based on the MVC 
+(Model-View-Controller) design pattern, which is a common pattern for designing web 
+applications.
+
+Here's a brief overview of the components of the MVC pattern:
+
+    Model: The Model represents the business data and business logic. In Spring, this can be 
+            a simple Java class, a POJO (Plain Old Java Object).
+
+    View: The View is responsible for rendering the Model data. It generates the HTML to be 
+            sent to the client. In Spring MVC, this could be JSP, Thymeleaf, FreeMarker, etc.
+
+    Controller: The Controller handles user input. It updates the Model and decides which 
+                View to display. In Spring MVC, controllers are typically classes annotated 
+                with @Controller.
+
+        @Controller
+        public class HelloWorldController {
+
+            @GetMapping("/hello")
+            public String sayHello(Model model) {
+                model.addAttribute("message", "Hello, world!");
+                return "hello";
+            }
+        }
+
+    In this example, when a GET request is made to "/hello", the sayHello method is called. 
+    This method adds a message to the Model, then returns the name of the View ("hello") that 
+    should be used to render the Model.
+
+The provided example for managing list of employees. The project name is (mcv). 
+
+    myapp/
+├── pom.xml
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── com/myapp/
+│   │   │   │   ├── Application.java
+│   │   │   │   ├── controller/
+│   │   │   │   │   ├── EmployeeController.java
+│   │   │   │   ├── model/
+│   │   │   │   │   ├── Employee.java
+│   │   │   │   ├── repository/
+│   │   │   │   │   ├── EmployeeRepository.java
+│   │   │   │   ├── service/
+│   │   │   │   │   ├── EmployeeService.java
+│   │   │   │   └── util/
+│   │   │   │       ├── CsvUtils.java
+│   │   ├── resources/
+│   │   │   ├── application.properties
+│   │   │   ├── data.sql
+│   │   │   └── schema.sql
+│   └── test/
+
