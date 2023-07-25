@@ -1,0 +1,101 @@
+Spring Data JPA is a sub-project of Spring Data, which aims to simplify the data access 
+layers of applications. It provides a way to implement JPA-based repositories in a much 
+easier and flexible way. In the traditional Java EE approach, you would have to write a 
+lot of boilerplate code to create CRUD (Create, Read, Update, Delete) operations. 
+With Spring Data JPA, this is significantly reduced.
+
+Here are some of the concepts related to Spring Data JPA:
+
+    Repositories: This is an interface that provides a way to perform operations related 
+    to a particular entity. You simply need to define an interface extending Repository 
+    or one of its sub-interfaces, and Spring will automatically implement it for you.
+
+        public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+        }
+
+    The above interface will provide all the CRUD operations for the Employee entity.
+
+@Entity: This is a JPA annotation to make this object ready for storage in a JPA-based data 
+            store.
+
+@Table: This is used to provide some specific details about the table that will be used for
+            this entity.
+
+@Id: This JPA annotation is used to specify the primary key of the entity.
+
+@GeneratedValue: This is used to specify how the primary key should be generated.
+
+Here's an example of an Entity:
+
+        @Entity
+        @Table(name = "employees")
+        public class Employee {
+        
+            @Id
+            @GeneratedValue(strategy = GenerationType.AUTO)
+            private long id;
+        
+            @Column(name = "first_name", nullable = false)
+            private String firstName;
+        
+            @Column(name = "last_name", nullable = false)
+            private String lastName;
+            
+            // constructors, getters, setters...
+        }
+
+    The above entity will be mapped to a table named employees. The id field will be the
+    primary key, and it will be generated automatically.
+
+CrudRepository: It provides CRUD functions like save(), findOne(), findAll(), count(), 
+                    delete() etc.
+
+PagingAndSortingRepository: It extends CrudRepository and provides methods related to 
+                                pagination and sorting.
+
+JpaRepository: It extends PagingAndSortingRepository and provides JPA related methods such 
+                    as flushing the persistence context and deleting records in a batch. 
+                It’s usually the choice for DAO layer.
+
+One of the most powerful features of Spring Data JPA is the ability to write query methods,
+for which the implementation is automatically provided by Spring. For example:
+
+        public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+
+            List<Employee> findByLastName(String lastName);
+
+        }
+
+    The above method will be implemented by Spring Data JPA automatically. It will find
+    all the employees with the given last name.
+
+    You can also write custom queries using the @Query annotation:
+
+        public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+
+            @Query("SELECT e FROM Employee e WHERE e.firstName = ?1")
+            List<Employee> findByFirstName(String firstName);
+
+        }
+
+    The above method will find all the employees with the given first name.
+
+    You can also use the @NamedQuery annotation to define a query:
+
+        @Entity
+        @Table(name = "employees")
+        @NamedQuery(name = "Employee.findByFirstName", query = "SELECT e FROM Employee e WHERE e.firstName = ?1")
+        public class Employee {
+            // ...
+        }
+
+    And then use it in the repository:
+    
+            public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    
+                List<Employee> findByFirstName(String firstName);
+    
+            }
+
+    The above method will find all the employees with the given first name.
+
