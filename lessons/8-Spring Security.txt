@@ -1,0 +1,44 @@
+Spring Security is a powerful and highly customizable framework for handling 
+authentication and authorization in Spring applications. Let's go through a simple 
+example of how to use it.
+
+Here are the steps you would typically take:
+
+    Add Spring Security to your project's dependencies: If you're using Maven, this is as 
+    simple as adding the following dependency to your pom.xml file:
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
+    Configure Spring Security: You can do this by adding a class that extends
+
+        @Configuration
+        @EnableWebSecurity
+        public class SecurityConfig {
+
+            @Bean
+            public UserDetailsService userDetailsService() {
+                InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+                manager.createUser(User
+                    .withUsername("user")
+                    .password(passwordEncoder().encode("password"))
+                    .roles("USER")
+                    .build());
+                return manager;
+            }
+
+            @Bean
+            public PasswordEncoder passwordEncoder() {
+                return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+            }
+        }
+
+This configuration creates a single user with the username "user" and the password
+"password". It also configures a PasswordEncoder that uses the BCrypt strong hashing
+function to encode passwords.
+
+This is just a simple user in memory configuration. You can make it presistence by
+creating a database for users contains user details plus roles, or you can create a
+micro-service for users to manage the authentication and authorization.
