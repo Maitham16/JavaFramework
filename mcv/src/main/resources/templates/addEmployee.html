@@ -4,8 +4,11 @@
     <title>Add Employee</title>
 </head>
 <body>
+    
 <h1>Add Employee</h1>
 <form action="#" th:action="@{/addEmployee}" th:object="${employee}" method="post">
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+    <p th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</p>
     <p>Id: <input type="text" th:field="*{id}"/></p>
     <p>Name: <input type="text" th:field="*{name}"/></p>
     <p>Salary: <input type="text" th:field="*{salary}"/></p>

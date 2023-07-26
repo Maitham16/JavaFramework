@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 
 import com.example.mcv.Model.Employee;
 import com.example.mcv.Service.EmployeeService;
@@ -31,7 +33,10 @@ public class EmployeeController {
 
 
     @PostMapping("/addEmployee")
-    public String addEmployeeSubmit(@ModelAttribute Employee employee) {
+    public String addEmployeeSubmit(@Validated @ModelAttribute Employee employee, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "addEmployee";
+        }
         employeeService.save(employee);
         return "redirect:/employees";
     }
