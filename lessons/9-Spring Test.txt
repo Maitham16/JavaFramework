@@ -1,0 +1,78 @@
+Spring provides a comprehensive testing framework that allows you to fully test your 
+applications. Below are some key concepts and features:
+
+TestContext Framework: This is the core part of Spring's testing support. It provides support 
+                        for creating and managing Spring application contexts for testing, 
+                        caching those contexts, dependency injection of test instances, 
+                        transactional test management, etc.
+
+Spring Boot Test: Spring Boot provides additional utilities and auto-configuration for 
+                    testing Spring Boot applications. This includes automatic configuration 
+                    of an application context, mock beans, utilities for testing web 
+                    applications, etc.
+
+Types of Tests:
+
+    Unit Tests: These are simple tests that test a single component (like a service or 
+                repository) in isolation. Spring provides Mockito and MockBean for creating 
+                mock objects in unit tests.
+
+    Integration Tests: These are tests that check the interaction of multiple components. 
+                        Spring provides @SpringBootTest annotation which can be used to 
+                        create an application context for integration tests.
+
+    Web Tests: These tests verify the interaction of the web layer (controllers) without 
+                starting a server. @WebMvcTest can be used for tests that only need Spring 
+                MVC components. Spring Boot also provides TestRestTemplate and WebTestClient 
+                for testing REST APIs.
+
+Testing Annotations:
+
+    @SpringBootTest: This annotation tells Spring Boot to look for the main configuration 
+                        class and use that to create an application context.
+
+    @WebMvcTest: This annotation is used for Spring MVC tests. It disables full auto-configuration 
+                    and only applies configuration relevant to MVC tests.
+
+    @DataJpaTest: This annotation is used for JPA tests. It disables full auto-configuration and only 
+                    applies configuration relevant to JPA tests.
+
+    @MockBean: This annotation can be used to add mock objects to the Spring application context. 
+                The mock will replace any existing bean of the same type in the application context.
+
+    @TestPropertySource: This annotation is used to specify locations of property files specific 
+                            to the tests.
+
+    @AutoConfigureMockMvc: This annotation can be used along with @SpringBootTest to inject a MockMvc 
+                            instance for testing web controllers.
+
+Here's an example of a simple Spring Boot test:
+
+        @SpringBootTest
+        class EmployeeServiceTests {
+
+            @Autowired
+            private EmployeeService employeeService;
+
+            @MockBean
+            private EmployeeRepository employeeRepository;
+
+            @Test
+            void testFindAll() {
+                Employee employee = new Employee();
+                employee.setName("John Doe");
+                employee.setSalary(1000);
+                List<Employee> employees = Arrays.asList(employee);
+
+                Mockito.when(employeeRepository.findAll()).thenReturn(employees);
+
+                Iterable<Employee> result = employeeService.findAll();
+
+                Assertions.assertTrue(result.iterator().hasNext());
+            }
+        }
+
+In this example, we are testing the EmployeeService's findAll() method. 
+We use @MockBean to create a mock of EmployeeRepository, and we define its behavior 
+using Mockito's when() and thenReturn() methods. Then we call the method under test 
+and verify the result using JUnit's Assertions.
