@@ -76,3 +76,86 @@ In this example, we are testing the EmployeeService's findAll() method.
 We use @MockBean to create a mock of EmployeeRepository, and we define its behavior 
 using Mockito's when() and thenReturn() methods. Then we call the method under test 
 and verify the result using JUnit's Assertions.
+
+Let's take an example of a simple unit test in Java using JUnit framework. 
+Let's assume that we have a basic Calculator class that we want to test.
+
+        public class Calculator {
+
+            public int add(int a, int b) {
+                return a + b;
+            }
+
+            public int subtract(int a, int b) {
+                return a - b;
+            }
+        }
+
+We can write a simple unit test for this class as follows:
+    
+            import org.junit.jupiter.api.Assertions;
+            import org.junit.jupiter.api.Test;
+    
+            public class CalculatorTests {
+    
+                @Test
+                void testAdd() {
+                    Calculator calculator = new Calculator();
+                    int result = calculator.add(10, 20);
+                    Assertions.assertEquals(30, result);
+                }
+    
+                @Test
+                void testSubtract() {
+                    Calculator calculator = new Calculator();
+                    int result = calculator.subtract(20, 10);
+                    Assertions.assertEquals(10, result);
+                }
+            }
+
+In this example, we have two test methods: testAdd() and testSubtract().
+We create an instance of Calculator and call the methods under test. 
+Then we use JUnit's Assertions to verify the results.
+
+Now, let's take an example of simple Integration and Web Tests in Java using JUnit framework.
+Let's assume that we have a simple Spring Boot application with a REST controller
+that we want to test.
+
+        @RestController
+        public class HelloController {
+
+            @GetMapping("/hello")
+            public String hello() {
+                return "Hello World!";
+            }
+        }
+
+We can write a simple integration test for this controller as follows:
+    
+            import org.junit.jupiter.api.Assertions;
+            import org.junit.jupiter.api.Test;
+            import org.springframework.beans.factory.annotation.Autowired;
+            import org.springframework.boot.test.context.SpringBootTest;
+            import org.springframework.boot.test.web.client.TestRestTemplate;
+            import org.springframework.boot.web.server.LocalServerPort;
+            import org.springframework.http.ResponseEntity;
+        
+            @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+            public class HelloControllerTests {
+        
+                @LocalServerPort
+                private int port;
+        
+                @Autowired
+                private TestRestTemplate restTemplate;
+        
+                @Test
+                void testHello() {
+                    ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/hello", String.class);
+                    Assertions.assertEquals("Hello World!", response.getBody());
+                }
+            }
+
+In this example, we use @SpringBootTest annotation to create an application context
+for testing. We also use @LocalServerPort to get the port number of the embedded server.
+Then we use TestRestTemplate to make a request to the controller and verify the response.
