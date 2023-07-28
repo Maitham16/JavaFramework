@@ -15,8 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-
-
 import com.example.mcv.Controller.EmployeeController;
 import com.example.mcv.Model.Employee;
 import com.example.mcv.Service.EmployeeService;
@@ -64,10 +62,10 @@ public class EmployeeControllerTest {
         when(employeeService.save(any(Employee.class))).thenReturn(employee);
 
         mockMvc.perform(post("/addEmployee")
-                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                    .param("id", "1")
-                    .param("name", "John Doe")
-                    .param("salary", "1000.00"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "1")
+                .param("name", "John Doe")
+                .param("salary", "1000.00"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/employees"));
     }
